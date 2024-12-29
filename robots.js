@@ -1,9 +1,12 @@
 
+import axios from 'axios'
+
 const head = ([h]) => h
 const tail = ([, ...t]) => t
 const DEFAULT_USERAGENT = 'User-agent: *'
 
-class ExactMatchRule {
+// matches any url that starts with the provided path
+export class ExactMatchRule {
 	constructor(line, path) {
 		this.line = line
 		this.path = path
@@ -14,8 +17,8 @@ class ExactMatchRule {
 	}
 }
 
-
-class WildCardRule {
+// matches any url using wildcards in the provided path
+export class WildCardRule {
 	constructor(line, path) {
 		this.line = line
 
@@ -42,13 +45,28 @@ class WildCardRule {
 	}
 }
 
-class Robots {
+export class Robots {
 	constructor(url) {
 		this.origin = url.origin
 		this.url = new URL('robots.txt', url.origin)
 		this.disallow = []
 		this.allow = []
 		this.logs = []
+	}
+
+	async load() {
+		try {
+			const response = await axios.get(this.url)
+
+			this.parse(response.data)
+
+			return response.data
+		}
+		catch(ex) {
+			if(!ex.response) {
+				throw ex
+			}
+		}
 	}
 
 	parse(data) {
@@ -114,6 +132,3 @@ function createRule(line, url) {
 
 	return new WildCardRule(line, url)
 }
-
-
-module.exports = Robots

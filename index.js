@@ -1,17 +1,12 @@
 
-import { crawl } from './crawl.js'
-import { ConsoleLogger } from './logger.js'
-
-const BASE_URL = new URL('https://we-evolve.co.uk')
-
-async function main() {
-	const visited = await crawl(BASE_URL, ConsoleLogger)
-
-	const _200 = Object.values(visited).filter(v => v.status === 200).map(v => v.url)
-	const _404 = Object.values(visited).filter(v => v.status === 404).map(v => v.url)
-
-	console.log('200s:', _200)
-	console.log('404s:', _404)
-}
-
-main()
+export { crawl } from './crawl.js'
+export {
+	UNVISITED_URL,
+	UNKNOWN_RESPONSE,
+	EXTERNAL_URL,
+	ROBOTS_SKIP,
+	TrackedUrl,
+	Crawler,
+} from './crawler.js'
+export { ConsoleLogger, NoOpLogger } from './logger.js'
+export { ExactMatchRule } from './robots.js'

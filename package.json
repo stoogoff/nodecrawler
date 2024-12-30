@@ -1,5 +1,15 @@
 {
+  "name": "nodecrawler",
+  "version": "1.0.0",
+  "description": "A basic web crawler.",
+  "author": "Stoo Goff",
+  "homepage": "https://github.com/stoogoff/nodecrawler",
+  "repository": "github:stoogoff/nodecrawler",
   "type": "module",
+  "license": {
+    "type": "MIT",
+    "url": "https://opensource.org/license/mit"
+  },
   "dependencies": {
     "axios": "^1.1.3",
     "node-html-parser": "^6.1.1"
